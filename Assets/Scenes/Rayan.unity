@@ -477,38 +477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
-  m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
 --- !u!1 &403310441
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,17 +727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
 --- !u!1 &675907520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,6 +1670,7 @@ GameObject:
   - component: {fileID: 1997962242}
   - component: {fileID: 1997962241}
   - component: {fileID: 1997962240}
+  - component: {fileID: 1997962244}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1729,7 +1687,7 @@ Transform:
   m_GameObject: {fileID: 1997962238}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.62598, y: 0.58, z: 5.426}
+  m_LocalPosition: {x: -5.92, y: 0.58, z: 5.426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1840,6 +1798,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997962238}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1997962244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997962238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c49c349eea4a6f9719386703f11e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DialogueGraph.Runtime::DialogueGraph.Runtime.RuntimeDialogueGraph
+  DlogObject: {fileID: -5475051401550479605, guid: 03d55ab32bb0bda488d178b908b12985, type: 3}
+  CurrentAssetGuid: 03d55ab32bb0bda488d178b908b12985
+  PersistentData:
+  - ActorDataIndices:
+      m_keys:
+      - 4e501f65-5fb6-49c5-b525-4e91fa1e2285
+      m_values: 00000000
+    ActorData:
+    - Name: Bob
+      CustomData: {fileID: 11400000, guid: 0f96a3e10ca45ed47bf746326fb1aa4f, type: 2}
+      Property:
+        Guid: 4e501f65-5fb6-49c5-b525-4e91fa1e2285
+        ReferenceName: Actor_6D69A7D7
+        DisplayName: Test
+        Type: 2
+    CheckDataIndices:
+      m_keys: []
+      m_values: 
+    CheckData: []
+    TriggerDataIndices:
+      m_keys:
+      - ca756d5e-d76b-4858-be67-ee622bc1eecb
+      m_values: 00000000
+    TriggerData:
+    - _target: {fileID: 11400000, guid: 0f96a3e10ca45ed47bf746326fb1aa4f, type: 2}
+      _methodName: Meet
+      _args: []
+      _dynamic: 0
+      _typeName: DialogueGraph.Runtime.TriggerEvent, DialogueGraph.Runtime, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      dirty: 0
+  PersistentDataIndices:
+    m_keys:
+    - 03d55ab32bb0bda488d178b908b12985
+    m_values: 00000000
 --- !u!1 &2070576048
 GameObject:
   m_ObjectHideFlags: 0
