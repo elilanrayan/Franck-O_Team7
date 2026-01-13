@@ -40,10 +40,18 @@ public class RewindController : MonoBehaviour
 
     int currentData = 0;
 
+    [ContextMenuItem("Load", "Test")]
+    string test;
+
+    private void Reset()
+    {
+        AddComponentToList(transform);
+    }
+
     void Start()
     {
         rewindData = new(limitDataCount);
-        AddComponentToList(transform);
+        //AddComponentToList(transform);
     }
 
     void Update()
@@ -51,7 +59,12 @@ public class RewindController : MonoBehaviour
         if (bShouldRecord) Record(Time.frameCount);
     }
 
-    void AddComponentToList(Component component)
+    void Test()
+    {
+
+    }
+
+    public void AddComponentToList(Component component)
     {
         components.Add(component);
     }
@@ -72,9 +85,3 @@ public class RewindController : MonoBehaviour
         }
     }
 }
-
-// 1
-// 2
-// 3
-// 4
-// 5
