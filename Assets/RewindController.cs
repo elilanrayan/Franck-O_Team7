@@ -4,42 +4,21 @@ using AYellowpaper.SerializedCollections;
 using System;
 using NaughtyAttributes;
 
-//public interface IRewindableData
-//{
-//    public abstract void StoreData();
-//    public abstract void PlayData();
-//}
-
 [Serializable]
-public struct FTransformRewindData
+public struct FComponentRewindData
 {
-    public FTransformRewindData(Vector3 position, Quaternion rotation, Vector3 scale)
-    {
-        Position = position;
-        Rotation = rotation;
-        Scale = scale;
-    }
-
-    public FTransformRewindData(Transform transform)
-    {
-        Position = transform.position;
-        Rotation = transform.rotation;
-        Scale = transform.localScale;
-    }
-
-     public Vector3 Position;
-     public Quaternion Rotation;
-     public Vector3 Scale;
+    public int Frame;
+    public List<IRewindData> RewindData;
 }
 
 [DisallowMultipleComponent]
 public class RewindController : MonoBehaviour
 {
     [SerializeField]
-    public List<Component> components = new();
+    public List<Component> recordedComponents = new();
 
-    [SerializedDictionary("Frame", "RewindData")]
-    public SerializedDictionary<int, FTransformRewindData> rewindData;
+    //[SerializedDictionary("Frame", "RewindData")]
+    public SerializedDictionary<Component, List<FComponentRewindData>> RewindData;
 
     [SerializeField, ReadOnly]
     bool bShouldRecord = true;
@@ -63,11 +42,11 @@ public class RewindController : MonoBehaviour
     {
         RewindManager rewindManager = FindAnyObjectByType<RewindManager>();
         limitDataCount = rewindManager.maxRewindableTime;
-        rewindData = new(limitDataCount);
+        RewindData = new(limitDataCount);
         //AddComponentToList(transform);
 
         rewindManager.OnRewind += Play;
-        rewindManager.OnToggleRecord += OnToggleRecord; 
+        rewindManager.OnToggleRecord += OnToggleRecord;
     }
 
     private void OnToggleRecord(bool bShouldRecord)
@@ -87,18 +66,21 @@ public class RewindController : MonoBehaviour
 
     public void Play(int frame)
     {
-        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
+        if (!RewindData.TryGetValue(frame, out List<FComponentRewindData> componentDatas)) return;
 
-        foreach (Component component in components)
+        foreach (FComponentRewindData componentData in componentDatas)
         {
-            Transform currentTransfrom = (Transform)component;
-            if (currentTransfrom != null)
+            componentData.RewindData.;
+            foreach (Component component in recordedComponents)
             {
-                currentTransfrom.SetPositionAndRotation(transformData.Position, transformData.Rotation);
-                currentTransfrom.localScale = transformData.Scale;
+                if (componentData.d == component)
+                {
+                    rewindData.SetData(component);
+                    break;
+                }
             }
-            TryRemoveData(frame);
         }
+        TryRemoveData(frame);
     }
 
     private void ToggleGravity(bool newGravity)
@@ -117,34 +99,33 @@ public class RewindController : MonoBehaviour
 
     private void TryRemoveData(int frame)
     {
-        rewindData.Remove(frame);
+        RewindData.Remove(frame);
     }
 
     public void AddComponentToList(Component component)
     {
-        components.Add(component);
+        recordedComponents.Add(component);
     }
 
     // Each frame
     void Record(int actualFrame)
     {
-        if (rewindData.Count >= limitDataCount)
-        {
-            rewindData.Remove(actualFrame - limitDataCount);
-        }
+        List<IRewindData> rewindDatas = new();
 
-        foreach (Component component in components)
+        foreach (Component component in recordedComponents)
         {
-            if ((Transform)component != null)
+            IRewindData data = RewindUtility.GetInterface(component);
+            if (data != null)
             {
-                FTransformRewindData transformData = new FTransformRewindData(transform);
-                rewindData.Add(actualFrame, transformData);
-
+                data.GetData(component);
+                rewindDatas.Add(data);
             }
         }
+
+        RewindData.Add(actualFrame, rewindDatas);
     }
 
-   public void BeginDestroy()
+    public void BeginDestroy()
     {
         Destroy(this);
     }

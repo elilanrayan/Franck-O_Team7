@@ -36,7 +36,7 @@ public class RewindControllerEditor : Editor
 
                 if (controller == component) continue;
                  
-                bool checkbox = controller.components.Contains(component);
+                bool checkbox = controller.recordedComponents.Contains(component);
                 menu.AddItem(new GUIContent($"{components[i].ToString()}"), checkbox, () => AddOrRemoveComponentToList(component, controller));
             }
 
@@ -45,9 +45,9 @@ public class RewindControllerEditor : Editor
     }
 
     private void AddOrRemoveComponentToList(Component component, RewindController controller) { 
-        if (controller.components.Contains(component))
+        if (controller.recordedComponents.Contains(component))
         {
-            controller.components.Remove(component);
+            controller.recordedComponents.Remove(component);
         }
         else
         {
