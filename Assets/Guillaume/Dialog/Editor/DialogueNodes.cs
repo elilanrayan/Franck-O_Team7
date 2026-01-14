@@ -2,6 +2,9 @@ using UnityEngine;
 using Unity.GraphToolkit.Editor;
 using System;
 using UnityEngine.TestTools.Constraints;
+using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class StartNode : Node
@@ -23,7 +26,10 @@ public class EndNode : Node
 
 public class DialogueNode : Node
 {
-   protected override void OnDefinePorts(IPortDefinitionContext context)
+
+    const string optionId = "mode";
+
+    protected override void OnDefinePorts(IPortDefinitionContext context)
     {
         context.AddInputPort("in").Build();
         context.AddOutputPort("out").Build();
@@ -31,12 +37,16 @@ public class DialogueNode : Node
         context.AddInputPort<string>("Speaker").Build();
         context.AddInputPort<string>("Dialogue").Build();
     }
+
+    protected override void OnDefineOptions(IOptionDefinitionContext context)
+    {
+        context.AddOption<DialogueMode>(optionId).WithDefaultValue(DialogueMode.Panel).Delayed();
+    }
 }
 
 [Serializable]
 public class ChoiceNode : Node
 {
-
     const string optionId = "portCount";
     protected override void OnDefinePorts(IPortDefinitionContext context)
     {
@@ -58,4 +68,11 @@ public class ChoiceNode : Node
     {
         context.AddOption<int>(optionId).WithDefaultValue(2).Delayed();
     }
+}
+
+public enum DialogueMode
+{
+    Panel,
+    Popup,
+    Bulle
 }

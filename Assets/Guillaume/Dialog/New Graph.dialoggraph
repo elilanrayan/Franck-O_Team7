@@ -73,9 +73,9 @@ MonoBehaviour:
         m_LastKnownBounds:
           serializedVersion: 2
           x: 396
-          y: 131.20001
-          width: 2376
-          height: 302.4
+          y: 39.199997
+          width: 2376.8
+          height: 358.40002
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 15465495884846167321
@@ -364,7 +364,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 25a239d387c04b021b12ecc182959f31
         m_Version: 2
-        m_Position: {x: 710.38806, y: 353.28592}
+        m_Position: {x: 664.8941, y: 290.8639}
         m_Title: Bobby
         m_Tooltip: 
         m_NodePreviewModel:
@@ -401,7 +401,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 81e83d815542da7aceb21bce758c4bbf
         m_Version: 2
-        m_Position: {x: 582.2081, y: 178.39795}
+        m_Position: {x: 593.8461, y: 112.80191}
         m_Title: DialogueNode
         m_Tooltip: 
         m_NodePreviewModel:
@@ -411,9 +411,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013361
           - rid: 7405334283611013362
+          - rid: 7405334283611013456
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -473,7 +475,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 26e484048e6a101d0086cf55531eda51
         m_Version: 2
-        m_Position: {x: 428.46817, y: 348.3019}
+        m_Position: {x: 358.6402, y: 261.5459}
         m_Title: Bob
         m_Tooltip: 
         m_NodePreviewModel:
@@ -510,7 +512,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: b079102d43377f509436309938b7a19d
         m_Version: 2
-        m_Position: {x: 888.59204, y: 200.30997}
+        m_Position: {x: 913.64276, y: 111.43799}
         m_Title: DialogueNode
         m_Tooltip: 
         m_NodePreviewModel:
@@ -520,9 +522,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013365
           - rid: 7405334283611013366
+          - rid: 7405334283611013457
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -755,7 +759,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: a2520b13aa28c09084a2e55407cdf303
         m_Version: 2
-        m_Position: {x: 1216, y: 202.27216}
+        m_Position: {x: 1227.4244, y: 110.87686}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -846,7 +850,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 711686129a61a75abdc77c88d8e9f9af
         m_Version: 2
-        m_Position: {x: 1045.716, y: 354.6556}
+        m_Position: {x: 950.92664, y: 315.82617}
         m_Title: Bob
         m_Tooltip: 
         m_NodePreviewModel:
@@ -923,7 +927,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 8f00861138c9125fff1edfa4aa8cd619
         m_Version: 2
-        m_Position: {x: 1629.2382, y: 130.80907}
+        m_Position: {x: 1640.6626, y: 39.413773}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -933,9 +937,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013388
           - rid: 7405334283611013389
+          - rid: 7405334283611013458
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1004,7 +1010,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 6dedda6de055b434d936f258c5697d8a
         m_Version: 2
-        m_Position: {x: 1352.9192, y: 147.82242}
+        m_Position: {x: 1364.3436, y: 56.427124}
         m_Title: Bobby
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1073,7 +1079,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: ad686a58b778145c54889c2b62a3ddf8
         m_Version: 2
-        m_Position: {x: 1631.3079, y: 299.5569}
+        m_Position: {x: 1643.7903, y: 228.26355}
         m_Title: DialogueNode
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1083,9 +1089,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013397
           - rid: 7405334283611013398
+          - rid: 7405334283611013459
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1186,7 +1194,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 2100aab7758c9fbacd0dec642455d7e4
         m_Version: 2
-        m_Position: {x: 1958.734, y: 133.52208}
+        m_Position: {x: 1938.1703, y: 42.126877}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1196,9 +1204,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013420
           - rid: 7405334283611013421
+          - rid: 7405334283611013460
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1267,7 +1277,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 4c0f99db62f8414b5c85bdfb93f8ccdd
         m_Version: 2
-        m_Position: {x: 1767.934, y: 35.92209}
+        m_Position: {x: 1722.2365, y: -46.333557}
         m_Title: "Marseillais bour\xE9"
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1336,7 +1346,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: a52b3b3b191c166c04ad3f95a7147521
         m_Version: 2
-        m_Position: {x: 2219.1338, y: 132.32207}
+        m_Position: {x: 2198.57, y: 40.926865}
         m_Title: DialogueNode
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1346,9 +1356,11 @@ MonoBehaviour:
           m_KeyList:
           - Speaker
           - Dialogue
+          - __option_mode
           m_ValueList:
           - rid: 7405334283611013429
           - rid: 7405334283611013430
+          - rid: 7405334283611013461
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1449,7 +1461,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: e65d9f7b17d987e1fd9d08a1c6786291
         m_Version: 2
-        m_Position: {x: 2657.134, y: 307.92212}
+        m_Position: {x: 2657.6853, y: 264.3058}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1540,3 +1552,69 @@ MonoBehaviour:
           m_PortDirection: 1
           m_PortOrientation: 0
           m_Title: in
+    - rid: 7405334283611013456
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7405334283611013457
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7405334283611013458
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7405334283611013459
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7405334283611013460
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7405334283611013461
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 0
+        m_EnumType:
+          m_Identification: DialogueMode, Assembly-CSharp-Editor, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
