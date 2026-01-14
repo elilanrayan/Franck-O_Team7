@@ -20,23 +20,26 @@ public struct FTransformRewindData
         Scale = transform.localScale;
     }
 
-    [SerializeField] Vector3 Position;
-    [SerializeField] Quaternion Rotation;
-    [SerializeField] Vector3 Scale;
+     public Vector3 Position;
+     public Quaternion Rotation;
+     public Vector3 Scale;
 }
 
+[DisallowMultipleComponent]
 public class RewindController : MonoBehaviour
 {
     [SerializeField]
-    public List<Component> components;
+    public List<Component> components = new();
 
     [SerializedDictionary("Frame", "RewindData")]
     public SerializedDictionary<int, FTransformRewindData> rewindData;
 
+    [SerializeField]
     bool bShouldRecord = true;
 
-    [SerializeField]
-    int limitDataCount = 300;
+    bool bIsRewinding = false;
+
+    int limitDataCount;
 
     int currentData = 0;
 
@@ -50,18 +53,48 @@ public class RewindController : MonoBehaviour
 
     void Start()
     {
+        RewindManager rewindManager = FindAnyObjectByType<RewindManager>();
+        limitDataCount = rewindManager.maxRewindableTime;
         rewindData = new(limitDataCount);
         //AddComponentToList(transform);
+
+        rewindManager.OnRewind += Play;
+        rewindManager.OnToggleRecord += OnToggleRecord; 
+    }
+
+    private void OnToggleRecord(bool bShouldRecord)
+    {
+        this.bShouldRecord = bShouldRecord;
+        this.bIsRewinding = !bShouldRecord;
     }
 
     void Update()
     {
         if (bShouldRecord) Record(Time.frameCount);
+        if (!bIsRewinding)
+        {
+            TryRemoveData(Time.frameCount - limitDataCount);
+        }
     }
 
-    void Test()
+    private void TryRemoveData(int frame)
     {
+        rewindData.Remove(frame);
+    }
 
+    public void Play(int frame)
+    {
+        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
+        
+        foreach (Component component in components)
+        {
+            if ((Transform)component != null)
+            {
+                transform.SetPositionAndRotation(transformData.Position, transformData.Rotation);
+                transform.localScale = transformData.Scale;
+            }
+            TryRemoveData(frame);
+        }
     }
 
     public void AddComponentToList(Component component)
@@ -79,9 +112,17 @@ public class RewindController : MonoBehaviour
 
         foreach (Component component in components)
         {
-            Transform transform = (Transform)component.transform;
-            FTransformRewindData transformData = new FTransformRewindData(transform);
-            rewindData.Add(actualFrame, transformData);
+            if ((Transform)component != null)
+            {
+                FTransformRewindData transformData = new FTransformRewindData(transform);
+                rewindData.Add(actualFrame, transformData);
+
+            }
         }
+    }
+
+   public void BeginDestroy()
+    {
+        Destroy(this);
     }
 }

@@ -1,15 +1,29 @@
-using System.Collections.Generic;
-using UnityEngine;
 using AYellowpaper.SerializedCollections;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using UnityEditor;
+using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+
+
 
 [CustomEditor(typeof(RewindController))]
 public class RewindControllerEditor : Editor
 {
+    protected override void OnHeaderGUI()
+    {
+        base.OnHeaderGUI();
+        EditorGUILayout.LabelField(" Controller", EditorStyles.boldLabel);
+    }
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        GetTest();
 
         RewindController controller = (RewindController)target;
         Component[] components = controller.gameObject.GetComponents<Component>();
@@ -40,4 +54,18 @@ public class RewindControllerEditor : Editor
             controller.AddComponentToList(component);
         }
     }
+
+    private static void GetTest()
+    {
+        //AppDomain domain = AppDomain.CurrentDomain;
+        //AssemblyName assemblyName = new AssemblyName("UnityEditor.UIElements");
+        //Debug.Log(assemblyName);
+        ////TODO: Probably here I need to do something with the Assembly Definition?
+        //Assembly assemblyBuilder = domain.Load(assemblyName);
+        //Module moduleBuilder = assemblyBuilder.LoadModule(assemblyName.Name);
+        //Type editorClass = moduleBuilder.GetType("EditorElement");//, TypeAttributes.Public, typeof(VisualElement)
+        //editorClass;
+    }
+
+
 }
