@@ -1719,8 +1719,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aa4a658261d1ba4fb9fda6ee2b2e9e2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  components: []
+  m_EditorClassIdentifier: Assembly-CSharp::RewindController
+  components:
+  - {fileID: 1065745506}
+  rewindData:
+    _serializedList: []
+  limitDataCount: 300
 --- !u!4 &1065745506
 Transform:
   m_ObjectHideFlags: 0
