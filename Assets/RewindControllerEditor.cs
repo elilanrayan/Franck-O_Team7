@@ -14,11 +14,7 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(RewindController))]
 public class RewindControllerEditor : Editor
 {
-    protected override void OnHeaderGUI()
-    {
-        base.OnHeaderGUI();
-        EditorGUILayout.LabelField(" Controller", EditorStyles.boldLabel);
-    }
+    
 
     public override void OnInspectorGUI()
     {
