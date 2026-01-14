@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
 using System;
+using NaughtyAttributes;
+
+//public interface IRewindableData
+//{
+//    public abstract void StoreData();
+//    public abstract void PlayData();
+//}
 
 [Serializable]
 public struct FTransformRewindData
@@ -34,9 +41,10 @@ public class RewindController : MonoBehaviour
     [SerializedDictionary("Frame", "RewindData")]
     public SerializedDictionary<int, FTransformRewindData> rewindData;
 
-    [SerializeField]
+    [SerializeField, ReadOnly]
     bool bShouldRecord = true;
 
+    [SerializeField, ReadOnly]
     bool bIsRewinding = false;
 
     int limitDataCount;
@@ -66,35 +74,50 @@ public class RewindController : MonoBehaviour
     {
         this.bShouldRecord = bShouldRecord;
         this.bIsRewinding = !bShouldRecord;
+
+        ToggleGravity(bShouldRecord);
     }
 
     void Update()
     {
         if (bShouldRecord) Record(Time.frameCount);
-        if (!bIsRewinding)
+        if (!bIsRewinding) TryRemoveData(Time.frameCount - limitDataCount);
+    }
+
+
+    public void Play(int frame)
+    {
+        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
+
+        foreach (Component component in components)
         {
-            TryRemoveData(Time.frameCount - limitDataCount);
+            Transform currentTransfrom = (Transform)component;
+            if (currentTransfrom != null)
+            {
+                currentTransfrom.SetPositionAndRotation(transformData.Position, transformData.Rotation);
+                currentTransfrom.localScale = transformData.Scale;
+            }
+            TryRemoveData(frame);
+        }
+    }
+
+    private void ToggleGravity(bool newGravity)
+    {
+
+        if (TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2d))
+        {
+            rb2d.gravityScale = newGravity ? 1 : 0;
+        }
+
+        if (TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            rb.useGravity = newGravity;
         }
     }
 
     private void TryRemoveData(int frame)
     {
         rewindData.Remove(frame);
-    }
-
-    public void Play(int frame)
-    {
-        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
-        
-        foreach (Component component in components)
-        {
-            if ((Transform)component != null)
-            {
-                transform.SetPositionAndRotation(transformData.Position, transformData.Rotation);
-                transform.localScale = transformData.Scale;
-            }
-            TryRemoveData(frame);
-        }
     }
 
     public void AddComponentToList(Component component)
