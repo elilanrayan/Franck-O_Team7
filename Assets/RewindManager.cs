@@ -1,20 +1,24 @@
+using NaughtyAttributes;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using NaughtyAttributes;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class RewindManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> rewindableGameObjects;
+    [SerializeField,ReadOnly] List<GameObject> rewindableGameObjects;
 
     public int maxRewindableTime = 300;
 
     public event Action<bool> OnToggleRecord;
     public event Action<int> OnRewind;
+    public event Action<PauseState> OnPause;
 
     bool bIsRewinding;
+  [HideInInspector] public bool bIsPaused = false;
 
     public bool IsInEditor() { return Application.isEditor && !Application.isPlaying; }
 
@@ -50,5 +54,31 @@ public class RewindManager : MonoBehaviour
 
         OnToggleRecord?.Invoke(true);
         bIsRewinding = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetPause();
+        }
+    }
+
+    void SetPause()
+    {
+        bIsPaused = !bIsPaused;
+        if (bIsPaused)
+        {
+            Time.timeScale = 0f;
+            OnPause?.Invoke(PauseState.Paused);
+            OnToggleRecord?.Invoke(false);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            OnToggleRecord?.Invoke(true);
+        }
+         
+
     }
 }
