@@ -1336,6 +1336,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211088034}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1570595192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570595194}
+  - component: {fileID: 1570595193}
+  m_Layer: 0
+  m_Name: RewindManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1570595193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570595192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d96f51daee67046b3ee2eb34a610d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewindManager
+  rewindableGameObjects: []
+  maxRewindableTime: 300
+  frameRemaining: 300
+--- !u!4 &1570595194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570595192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.807, y: 0, z: 0.08209}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613819119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,6 +1718,7 @@ GameObject:
   - component: {fileID: 1997962241}
   - component: {fileID: 1997962240}
   - component: {fileID: 1997962244}
+  - component: {fileID: 1997962245}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1845,6 +1893,24 @@ MonoBehaviour:
     m_keys:
     - 03d55ab32bb0bda488d178b908b12985
     m_values: 00000000
+--- !u!114 &1997962245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997962238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa4a658261d1ba4fb9fda6ee2b2e9e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewindController
+  components:
+  - {fileID: 1997962239}
+  rewindData:
+    _serializedList: []
+  bShouldRecord: 1
+  bIsRewinding: 0
 --- !u!1 &2070576048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,3 +2060,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 270968427}
   - {fileID: 1969413157}
+  - {fileID: 1570595194}

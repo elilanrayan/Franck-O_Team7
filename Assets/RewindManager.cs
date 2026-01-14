@@ -14,35 +14,41 @@ public class RewindManager : MonoBehaviour
     public event Action<bool> OnToggleRecord;
     public event Action<int> OnRewind;
 
+    bool bIsRewinding;
 
-    [Button]
+    public bool IsInEditor() { return Application.isEditor && !Application.isPlaying; }
+
+    [Button, DisableIf(EConditionOperator.Or, "bIsRewinding", "IsInEditor")]
     void startRewind()
     {
-        StartCoroutine(StartRewind());
+        if (!bIsRewinding)
+        {
+            StartCoroutine(StartRewind());
+        }
+        else
+        {
+            Debug.LogError("Rewinding is already in progress");
+        }
     }
 
-  
+    [SerializeField, ProgressBar("Frame Remaining", 300, EColor.Green), ShowIf("bIsRewinding")]
+    int frameRemaining = 300;
+
     IEnumerator StartRewind()
     {
+        bIsRewinding = true;
         OnToggleRecord?.Invoke(false);
+        frameRemaining = maxRewindableTime;
+        int frameTarget = Time.frameCount - maxRewindableTime;
 
-        for (int i = Time.frameCount; i > Time.frameCount - maxRewindableTime; i--)
+        for (int i = Time.frameCount; i > frameTarget; i--)
         {
             OnRewind?.Invoke(i);
+            frameRemaining = i - frameTarget;
             yield return new WaitForEndOfFrame();
         }
 
         OnToggleRecord?.Invoke(true);
-    }
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        bIsRewinding = false;
     }
 }
