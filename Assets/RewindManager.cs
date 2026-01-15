@@ -12,13 +12,14 @@ public class RewindManager : MonoBehaviour
     [SerializeField,ReadOnly] List<GameObject> rewindableGameObjects;
 
     public int maxRewindableTime = 300;
+    public int currentStoppedFrame;
 
     public event Action<bool> OnToggleRecord;
-    public event Action<int> OnRewind;
-    public event Action<PauseState> OnPause;
+    public event Action<int, bool> OnRewind;
+    public event Action<PauseState, int> OnPause;
 
     bool bIsRewinding;
-  [HideInInspector] public bool bIsPaused = false;
+    [HideInInspector] public bool bIsPaused = false;
 
     public bool IsInEditor() { return Application.isEditor && !Application.isPlaying; }
 
@@ -47,13 +48,18 @@ public class RewindManager : MonoBehaviour
 
         for (int i = Time.frameCount; i > frameTarget; i--)
         {
-            OnRewind?.Invoke(i);
+            OnRewind?.Invoke(i, true);
             frameRemaining = i - frameTarget;
             yield return new WaitForEndOfFrame();
         }
 
         OnToggleRecord?.Invoke(true);
         bIsRewinding = false;
+    }
+
+    public void PlayFrame(int frame, bool delete)
+    {
+        OnRewind?.Invoke(frame, false);
     }
 
     private void Update()
@@ -70,15 +76,14 @@ public class RewindManager : MonoBehaviour
         if (bIsPaused)
         {
             Time.timeScale = 0f;
-            OnPause?.Invoke(PauseState.Paused);
-            OnToggleRecord?.Invoke(false);
+            OnPause?.Invoke(PauseState.Paused, currentStoppedFrame);
+            currentStoppedFrame = Time.frameCount;
         }
         else
         {
             Time.timeScale = 1f;
-            OnToggleRecord?.Invoke(true);
+            OnPause?.Invoke(PauseState.Unpaused, currentStoppedFrame);
+            currentStoppedFrame = -1;
         }
-         
-
     }
 }

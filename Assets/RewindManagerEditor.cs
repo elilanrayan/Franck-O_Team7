@@ -6,6 +6,7 @@ using UnityEngine;
 [CustomEditor(typeof(RewindManager))]
 public class RewindManagerEditor : Editor
 {
+    float oldValue = 0;
     float currentValue = 0;
     RewindManager manager => (RewindManager)target;
 
@@ -31,14 +32,17 @@ public class RewindManagerEditor : Editor
             EditorGUILayout.LabelField("Rewind Preview", EditorStyles.boldLabel);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Slider", currentValue.ToString());
-            currentValue = GUILayout.HorizontalSlider(currentValue, Time.frameCount, Time.frameCount - manager.maxRewindableTime);
+            oldValue = currentValue;
+            currentValue = GUILayout.HorizontalSlider(currentValue, manager.currentStoppedFrame, manager.currentStoppedFrame - manager.maxRewindableTime);
+            if (oldValue != currentValue)
+            {
+                manager.PlayFrame((int)currentValue, false);
+            }
             EditorGUILayout.EndHorizontal();
-            
-
         }
     }
 
-    private void OnPauseStateChanged(PauseState state)
+    private void OnPauseStateChanged(PauseState state, int currentStoppedFrame)
     {
             Repaint();
     }
