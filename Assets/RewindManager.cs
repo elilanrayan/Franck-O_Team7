@@ -3,13 +3,16 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
+
 public class RewindManager : MonoBehaviour
 {
-    [SerializeField,ReadOnly] List<GameObject> rewindableGameObjects;
+  [ReadOnlyList] public List<GameObject> rewindableGameObjects = new();
 
     public int maxRewindableTime = 300;
     public int currentStoppedFrame;
@@ -22,6 +25,8 @@ public class RewindManager : MonoBehaviour
     [HideInInspector] public bool bIsPaused = false;
 
     public bool IsInEditor() { return Application.isEditor && !Application.isPlaying; }
+
+  
 
     [Button, DisableIf(EConditionOperator.Or, "bIsRewinding", "IsInEditor")]
     void startRewind()
@@ -68,6 +73,7 @@ public class RewindManager : MonoBehaviour
         {
             SetPause();
         }
+
     }
 
     void SetPause()

@@ -1,10 +1,12 @@
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 [InitializeOnLoad]
 public class HierarchyIconEditor
 {
+   
     static HierarchyIconEditor()
     {
         EditorApplication.hierarchyWindowItemOnGUI += DrawIconOnHierarchy;
@@ -13,7 +15,7 @@ public class HierarchyIconEditor
     static void DrawIconOnHierarchy(int instanceID, Rect selectionRect)
     {
         GameObject obj = EditorUtility.EntityIdToObject(instanceID) as GameObject;
-
+        RewindManager manager = Object.FindAnyObjectByType<RewindManager>();
 
         if (obj != null && obj.GetComponent<Transform>() != null && obj.GetComponent<RewindManager>() == null && obj.GetComponent<Camera>() == null )
         {
@@ -25,9 +27,12 @@ public class HierarchyIconEditor
                 if (obj.TryGetComponent<RewindController>(out RewindController controller))
                 {
                     Object.DestroyImmediate(controller,true);
+                    manager.rewindableGameObjects.Remove(obj);
                 }
                 else
                 {
+                    manager.rewindableGameObjects.Add(obj);
+                   
                     obj.AddComponent<RewindController>();
                 }
 

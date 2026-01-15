@@ -40,6 +40,7 @@ public class RewindManagerEditor : Editor
             }
             EditorGUILayout.EndHorizontal();
         }
+
     }
 
     private void OnPauseStateChanged(PauseState state, int currentStoppedFrame)
