@@ -17,6 +17,8 @@ public class RuntimeDialogNode
     public string DialogueText;
     public List<ChoiceData> Choices = new List<ChoiceData>();
     public string NextNodeId;
+
+    public DialogueMode Mode;
 }
 
 [Serializable]
@@ -24,4 +26,11 @@ public class  ChoiceData
 {
     public string ChoiceText;
     public string DestinationNodeId;
+}
+
+public enum DialogueMode
+{
+    Panel,
+    Popup,
+    Bulle
 }

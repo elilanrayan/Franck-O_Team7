@@ -27,52 +27,50 @@ public class EndNode : Node
 public class DialogueNode : Node
 {
 
-    const string optionId = "mode";
+    public const string modeId = "Mode";
+    public const string SpeakerOpt = "Speaker Key";
+    public const string DialogueOpt = "Dialogue Key";
 
     protected override void OnDefinePorts(IPortDefinitionContext context)
     {
         context.AddInputPort("in").Build();
         context.AddOutputPort("out").Build();
-
-        context.AddInputPort<string>("Speaker").Build();
-        context.AddInputPort<string>("Dialogue").Build();
     }
 
     protected override void OnDefineOptions(IOptionDefinitionContext context)
     {
-        context.AddOption<DialogueMode>(optionId).WithDefaultValue(DialogueMode.Panel).Delayed();
+        context.AddOption<DialogueMode>(modeId).WithDefaultValue(DialogueMode.Panel).Delayed();
+        context.AddOption<DialogKey>(SpeakerOpt).WithDefaultValue(DialogKey.None);
+        context.AddOption<DialogKey>(DialogueOpt).WithDefaultValue(DialogKey.None);
     }
 }
 
 [Serializable]
 public class ChoiceNode : Node
 {
-    const string optionId = "portCount";
+    public const string modeId = "Mode";
+
+    const string portId = "Port Count";
+    public const string SpeakerOpt = "Speaker Key";
+    public const string DialogueOpt = "Dialogue Key";
     protected override void OnDefinePorts(IPortDefinitionContext context)
     {
         context.AddInputPort("in").Build();
 
-        context.AddInputPort<string>("Speaker").Build();
-        context.AddInputPort<string>("Dialogue").Build();
-
-        var option = GetNodeOptionByName(optionId);
+        var option = GetNodeOptionByName(portId);
         option.TryGetValue(out int portCount);
         for (int i = 0; i < portCount; i++)
         {
-            context.AddInputPort<string>($"Choice Text {i}").Build();
+            context.AddInputPort<DialogKey>($"Choice Text {i}").Build();
             context.AddOutputPort($"Choice {i}").Build();
         }
     }
 
     protected override void OnDefineOptions(IOptionDefinitionContext context)
     {
-        context.AddOption<int>(optionId).WithDefaultValue(2).Delayed();
+        context.AddOption<DialogueMode>(modeId).WithDefaultValue(DialogueMode.Panel).Delayed();
+        context.AddOption<int>(portId).WithDefaultValue(2).Delayed();
+        context.AddOption<DialogKey>(SpeakerOpt).WithDefaultValue(DialogKey.None);
+        context.AddOption<DialogKey>(DialogueOpt).WithDefaultValue(DialogKey.None);
     }
-}
-
-public enum DialogueMode
-{
-    Panel,
-    Popup,
-    Bulle
 }

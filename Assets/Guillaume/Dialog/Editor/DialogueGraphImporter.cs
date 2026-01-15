@@ -53,51 +53,78 @@ public class DialogueGraphImporter : ScriptedImporter
 
     private void ProcessDialogueNode(DialogueNode node, RuntimeDialogNode runtimeNode, Dictionary<INode, string> nodeIDMap)
     {
-        runtimeNode.SpeakerName = GetPortValue<string>(node.GetInputPortByName("Speaker"));
-        runtimeNode.DialogueText = GetPortValue<string>(node.GetInputPortByName("Dialogue"));
+        node.GetNodeOptionByName(DialogueNode.SpeakerOpt).TryGetValue(out DialogKey speakerKey);
+        runtimeNode.SpeakerName = speakerKey.ToString();
+
+        node.GetNodeOptionByName(DialogueNode.DialogueOpt).TryGetValue(out DialogKey dialogueKey);
+        runtimeNode.DialogueText = dialogueKey.ToString();
 
         var nextNodePort = node.GetOutputPortByName("out")?.firstConnectedPort;
         if (nextNodePort != null)
             runtimeNode.NextNodeId = nodeIDMap[nextNodePort.GetNode()];
+
+        if (node.GetNodeOptionByName(DialogueNode.modeId).TryGetValue(out DialogueMode mode))
+        {
+            runtimeNode.Mode = mode;
+        }
+        else
+        {
+            runtimeNode.Mode = DialogueMode.Panel;
+        }
     }
 
     private void ProcessChoiceNode(ChoiceNode node, RuntimeDialogNode runtimeNode, Dictionary<INode, string> nodeIDMap)
     {
-        runtimeNode.SpeakerName = GetPortValue<string>(node.GetInputPortByName("Speaker"));
-        runtimeNode.DialogueText = GetPortValue<string>(node.GetInputPortByName("Dialogue"));
+        node.GetNodeOptionByName(ChoiceNode.SpeakerOpt).TryGetValue(out DialogKey speakerKey);
+        runtimeNode.SpeakerName = speakerKey.ToString();
+
+        node.GetNodeOptionByName(ChoiceNode.DialogueOpt).TryGetValue(out DialogKey dialogueKey);
+        runtimeNode.DialogueText = dialogueKey.ToString();
 
         var choiceOutputPorts = node.GetOutputPorts().Where(p => p.name.StartsWith("Choice "));
 
         foreach (var outputPort in choiceOutputPorts)
         {
             var index = outputPort.name.Substring("Choice ".Length);
-            var TextPort = node.GetInputPortByName($"Choice Text {index}");
+            var textPort = node.GetInputPortByName($"Choice Text {index}");
+            string choiceKeyString = GetPortEnumString<DialogKey>(textPort);
 
             var choiceData = new ChoiceData
             {
-                ChoiceText = GetPortValue<string>(TextPort),
+                ChoiceText = choiceKeyString,
                 DestinationNodeId = outputPort.firstConnectedPort != null ? nodeIDMap[outputPort.firstConnectedPort.GetNode()] : null
             };
 
             runtimeNode.Choices.Add(choiceData);
         }
 
+        if (node.GetNodeOptionByName(ChoiceNode.modeId).TryGetValue(out DialogueMode mode))
+        {
+            runtimeNode.Mode = mode;
+        }
+        else
+        {
+            runtimeNode.Mode = DialogueMode.Panel;
+        }
 
     }
 
-    private T GetPortValue<T>(IPort port)
+    private string GetPortEnumString<T>(IPort port) where T : Enum
     {
-        if(port == null) return default;
+        if (port == null) return string.Empty;
 
-        if(port.isConnected)
+        if (port.isConnected)
         {
-            if(port.firstConnectedPort.GetNode() is IVariableNode variableNode)
+            if (port.firstConnectedPort.GetNode() is IVariableNode variableNode)
             {
-                variableNode.variable.TryGetDefaultValue(out T value);
-                return value;
+                return "VARIABLE_NOT_SUPPORTED_FOR_KEYS";
             }
         }
-        port.TryGetValue(out T fallbackValue);
-        return fallbackValue;
+        if (port.TryGetValue(out T enumValue))
+        {
+            return enumValue.ToString();
+        }
+
+        return string.Empty;
     }
 }
