@@ -33,9 +33,9 @@ public class RewindManagerEditor : Editor
             EditorGUILayout.LabelField("Slider", currentValue.ToString());
             currentValue = GUILayout.HorizontalSlider(currentValue, Time.frameCount, Time.frameCount - manager.maxRewindableTime);
             EditorGUILayout.EndHorizontal();
-            
 
         }
+
     }
 
     private void OnPauseStateChanged(PauseState state)
