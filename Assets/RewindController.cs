@@ -1,7 +1,15 @@
+using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using AYellowpaper.SerializedCollections;
-using System;
+using UnityEngine.Playables;
+
+//public interface IRewindableData
+//{
+//    public abstract void StoreData();
+//    public abstract void PlayData();
+//}
 
 [Serializable]
 public struct FTransformRewindData
@@ -20,23 +28,27 @@ public struct FTransformRewindData
         Scale = transform.localScale;
     }
 
-    [SerializeField] Vector3 Position;
-    [SerializeField] Quaternion Rotation;
-    [SerializeField] Vector3 Scale;
+     public Vector3 Position;
+     public Quaternion Rotation;
+     public Vector3 Scale;
 }
 
+[DisallowMultipleComponent]
 public class RewindController : MonoBehaviour
 {
     [SerializeField]
-    public List<Component> components;
+    public List<Component> components = new();
 
     [SerializedDictionary("Frame", "RewindData")]
     public SerializedDictionary<int, FTransformRewindData> rewindData;
 
-    bool bShouldRecord = true;
+    [SerializeField, ReadOnly]
+    bool bShouldRecordNewFrames = true;
 
-    [SerializeField]
-    int limitDataCount = 300;
+    [SerializeField, ReadOnly]
+    bool bShouldDeleteOlderFrames = true;
+
+    int limitDataCount;
 
     int currentData = 0;
 
@@ -50,18 +62,103 @@ public class RewindController : MonoBehaviour
 
     void Start()
     {
+        RewindManager rewindManager = FindAnyObjectByType<RewindManager>();
+        limitDataCount = rewindManager.maxRewindableTime;
         rewindData = new(limitDataCount);
         //AddComponentToList(transform);
+
+        rewindManager.OnRewind += Play;
+        rewindManager.OnToggleRecord += OnToggleRecord;
+        rewindManager.OnPause += OnPause;
+    }
+
+    private void OnPause(UnityEditor.PauseState pauseState, int currentStoppedFrame)
+    {
+        switch (pauseState)
+        {
+            case UnityEditor.PauseState.Paused:
+                OnToggleRecord(false);
+                bShouldDeleteOlderFrames = false;
+                break;
+            case UnityEditor.PauseState.Unpaused:
+                OnToggleRecord(true);
+                bShouldDeleteOlderFrames = true;
+                SlideAllFrames(currentStoppedFrame);
+                break;
+        }
+    }
+
+    private void OnToggleRecord(bool bShouldRecord)
+    {
+        this.bShouldRecordNewFrames = bShouldRecord;
+        ToggleGravity(bShouldRecord);
     }
 
     void Update()
     {
-        if (bShouldRecord) Record(Time.frameCount);
+        if (bShouldRecordNewFrames) Record(Time.frameCount);
+        if (bShouldDeleteOlderFrames) TryRemoveData(Time.frameCount - limitDataCount);
     }
 
-    void Test()
+
+    public void Play(int frame, bool delete)
+    {
+        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
+
+        foreach (Component component in components)
+        {
+            Transform currentTransfrom = (Transform)component;
+            if (currentTransfrom != null)
+            {
+                currentTransfrom.SetPositionAndRotation(transformData.Position, transformData.Rotation);
+                currentTransfrom.localScale = transformData.Scale;
+            }
+            if (delete)
+            {
+                TryRemoveData(frame);
+            }
+        }
+    }
+
+    private void SlideAllFrames(int lastStoppedFrame)
+    {
+        int delta = Time.frameCount - lastStoppedFrame;
+        List<KeyValuePair<int, FTransformRewindData>> toAdd = new();
+        List<int> toDelete = new();
+        foreach (KeyValuePair<int, FTransformRewindData> frameData in rewindData)
+        {
+            toAdd.Add(new(frameData.Key + delta, frameData.Value));
+            toDelete.Add(frameData.Key);
+        }
+
+        foreach (int key in toDelete)
+        {
+            rewindData.Remove(key);
+        }
+
+        foreach (KeyValuePair<int, FTransformRewindData> frameData in toAdd)
+        {
+            rewindData.Add(frameData.Key, frameData.Value);
+        }
+    }
+
+    private void ToggleGravity(bool newGravity)
     {
 
+        if (TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2d))
+        {
+            rb2d.gravityScale = newGravity ? 1 : 0;
+        }
+
+        if (TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            rb.useGravity = newGravity;
+        }
+    }
+
+    private void TryRemoveData(int frame)
+    {
+        rewindData.Remove(frame);
     }
 
     public void AddComponentToList(Component component)
@@ -72,16 +169,18 @@ public class RewindController : MonoBehaviour
     // Each frame
     void Record(int actualFrame)
     {
-        if (rewindData.Count >= limitDataCount)
-        {
-            rewindData.Remove(actualFrame - limitDataCount);
-        }
-
         foreach (Component component in components)
         {
-            Transform transform = (Transform)component.transform;
-            FTransformRewindData transformData = new FTransformRewindData(transform);
-            rewindData.Add(actualFrame, transformData);
+            if ((Transform)component != null)
+            {
+                FTransformRewindData transformData = new FTransformRewindData(transform);
+                rewindData.Add(actualFrame, transformData);
+            }
         }
+    }
+
+   public void BeginDestroy()
+    {
+        Destroy(this);
     }
 }
