@@ -14,22 +14,48 @@ public class RewindManagerEditor : Editor
     {
         //EditorApplication.pauseStateChanged += OnPauseStateChanged;
         manager.OnPause += OnPauseStateChanged;
+        EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
     }
 
     private void OnDisable()
     {
         //EditorApplication.pauseStateChanged -= OnPauseStateChanged;
         manager.OnPause -= OnPauseStateChanged;
+        EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
     }
 
+    bool _isOpenned;
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
+        _isOpenned = EditorGUILayout.Foldout(_isOpenned, "Rewindable Object :");
+        if (_isOpenned)
+        {
+            EditorGUI.indentLevel++;
+             foreach (var e in manager.rewindableGameObjects)
+            {
+               
+                if (GUILayout.Button(e.name))
+                {
+                    EditorGUIUtility.PingObject(e.gameObject);
+                    Selection.activeGameObject = e.gameObject;
+                    SceneView.FrameLastActiveSceneView();
+                    Selection.activeGameObject = manager.gameObject;
+                }
+
+            }
+             EditorGUI.indentLevel--;
+        }
+
+
+            EditorGUILayout.Space(30);
+        EditorGUILayout.IntField("Max Time", manager.maxRewindableTime);
+       
 
         if (manager.bIsPaused)
         {
-            EditorGUILayout.Space(10);
+            EditorGUILayout.Space(30);
             EditorGUILayout.LabelField("Rewind Preview", EditorStyles.boldLabel);
+            EditorGUILayout.IntField("Last Frame", manager.currentStoppedFrame);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Slider", currentValue.ToString());
             oldValue = currentValue;
@@ -45,6 +71,11 @@ public class RewindManagerEditor : Editor
 
     private void OnPauseStateChanged(PauseState state, int currentStoppedFrame)
     {
-            Repaint();
+         Repaint();
+    }
+
+    private void OnHiearchyStateChanged()
+    {
+        Repaint();
     }
 }

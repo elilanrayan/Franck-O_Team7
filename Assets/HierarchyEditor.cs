@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 [InitializeOnLoad]
 public class HierarchyIconEditor
 {
-   
+  
     static HierarchyIconEditor()
     {
         EditorApplication.hierarchyWindowItemOnGUI += DrawIconOnHierarchy;
@@ -24,6 +24,7 @@ public class HierarchyIconEditor
             GUIContent icon = obj.GetComponent<RewindController>() != null ? EditorGUIUtility.IconContent("Animation.Record") : EditorGUIUtility.IconContent("AudioDistortionFilter Icon");
             if (GUI.Button(iconRect, icon, GUIStyle.none))
             {
+                
                 if (obj.TryGetComponent<RewindController>(out RewindController controller))
                 {
                     Object.DestroyImmediate(controller,true);
