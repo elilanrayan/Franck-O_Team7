@@ -12,9 +12,9 @@ using UnityEngine.SocialPlatforms;
 
 public class RewindManager : MonoBehaviour
 {
-  [ReadOnlyList] public List<GameObject> rewindableGameObjects = new();
+   public List<GameObject> rewindableGameObjects { get; private set; } = new();
 
-    public int maxRewindableTime = 300;
+    public int maxRewindableTime = 700;
     public int currentStoppedFrame;
 
     public event Action<bool> OnToggleRecord;
