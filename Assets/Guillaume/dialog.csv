@@ -1,0 +1,10 @@
+Key;French;English;Espanol
+name_hero;Chevalier;Knight;Caballero
+name_wizard;Merlin;Merlin;Merlin
+name_guard;Garde Royal;Royal Guard;Guardia Real
+;;;
+dial_hero_hello;Bonjour !;Hello!;Buenos Días !
+dial_wizard_greet;Salutations, brave Ã¢me.;Greetings, brave soul.;Saludos, alma valiente.
+choice1;choix 1 français; choix 1 anglais;choix 1 espagnol
+choice2;choix 2 français; choix 2 anglais;choix 2 espagnol
+dial_guard;vous ne pouvez pas passer;you cannot pass;No puede pasar
