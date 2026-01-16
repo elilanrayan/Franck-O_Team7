@@ -15,6 +15,9 @@ public class RewindManagerEditor : Editor
         //EditorApplication.pauseStateChanged += OnPauseStateChanged;
         manager.OnPause += OnPauseStateChanged;
         EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
+        //EditorApplication.playModeStateChanged += OnPlayStateChanged;
+
+
     }
 
     private void OnDisable()
@@ -22,6 +25,7 @@ public class RewindManagerEditor : Editor
         //EditorApplication.pauseStateChanged -= OnPauseStateChanged;
         manager.OnPause -= OnPauseStateChanged;
         EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
+        //EditorApplication.playModeStateChanged -= OnPlayStateChanged;
     }
 
     bool _isOpenned;
@@ -33,6 +37,7 @@ public class RewindManagerEditor : Editor
             EditorGUI.indentLevel++;
              foreach (var e in manager.rewindableGameObjects)
             {
+                
                
                 if (GUILayout.Button(e.name))
                 {
@@ -67,6 +72,7 @@ public class RewindManagerEditor : Editor
             EditorGUILayout.EndHorizontal();
         }
 
+       
     }
 
     private void OnPauseStateChanged(PauseState state, int currentStoppedFrame)
@@ -77,5 +83,10 @@ public class RewindManagerEditor : Editor
     private void OnHiearchyStateChanged()
     {
         Repaint();
+    }
+
+    private void OnPlayStateChanged(PlayModeStateChange state)
+    {
+        serializedObject.ApplyModifiedProperties();
     }
 }

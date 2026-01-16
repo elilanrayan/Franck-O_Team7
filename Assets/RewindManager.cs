@@ -12,7 +12,7 @@ using UnityEngine.SocialPlatforms;
 
 public class RewindManager : MonoBehaviour
 {
-   public List<GameObject> rewindableGameObjects { get; private set; } = new();
+    [field: SerializeField]public List<GameObject> rewindableGameObjects { get; private set; } = new();
 
     public int maxRewindableTime = 700;
     public int currentStoppedFrame;
@@ -26,7 +26,15 @@ public class RewindManager : MonoBehaviour
 
     public bool IsInEditor() { return Application.isEditor && !Application.isPlaying; }
 
-  
+    private void Start()
+    {
+        Debug.Log(rewindableGameObjects.Count);
+    }
+
+    private void Awake()
+    {
+        Debug.Log(rewindableGameObjects.Count);
+    }
 
     [Button, DisableIf(EConditionOperator.Or, "bIsRewinding", "IsInEditor")]
     void startRewind()

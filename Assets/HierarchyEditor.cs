@@ -6,7 +6,6 @@ using static UnityEngine.GraphicsBuffer;
 [InitializeOnLoad]
 public class HierarchyIconEditor
 {
-  
     static HierarchyIconEditor()
     {
         EditorApplication.hierarchyWindowItemOnGUI += DrawIconOnHierarchy;
@@ -25,6 +24,7 @@ public class HierarchyIconEditor
             if (GUI.Button(iconRect, icon, GUIStyle.none))
             {
                 
+                    EditorGUI.BeginChangeCheck();
                 if (obj.TryGetComponent<RewindController>(out RewindController controller))
                 {
                     Object.DestroyImmediate(controller,true);
@@ -32,14 +32,24 @@ public class HierarchyIconEditor
                 }
                 else
                 {
+
                     manager.rewindableGameObjects.Add(obj);
-                   
+
                     obj.AddComponent<RewindController>();
                 }
 
-
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Debug.Log(manager.rewindableGameObjects.Count);
+                        Undo.RecordObject(manager, "Change int");
+                        EditorUtility.SetDirty(manager);
+                    }
             }
         }
     }
+
+    
+
+
 }
 
