@@ -6,7 +6,10 @@ public enum DialogKey
 	name_guard,
 	dial_hero_hello,
 	dial_wizard_greet,
-	choice1,
-	choice2,
-	dial_guard,
+	dial_wizard_acceptquest,
+	dial_wizard_renoncequest,
+	dial_guard_block,
+	quest_wizard,
+	choice_wizard_yes,
+	choice_wizard_no,
 }

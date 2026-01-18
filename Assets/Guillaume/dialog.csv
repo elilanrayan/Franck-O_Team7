@@ -5,6 +5,9 @@ name_guard;Garde Royal;Royal Guard;Guardia Real
 ;;;
 dial_hero_hello;Bonjour !;Hello!;Buenos Días !
 dial_wizard_greet;Salutations, brave Ã¢me.;Greetings, brave soul.;Saludos, alma valiente.
-choice1;choix 1 français; choix 1 anglais;choix 1 espagnol
-choice2;choix 2 français; choix 2 anglais;choix 2 espagnol
-dial_guard;vous ne pouvez pas passer;you cannot pass;No puede pasar
+dial_wizard_acceptquest;niquel, maintenant code moi un dialogue graph;Perfect, now code me a graphical dialogue;Perfecto, ahora codificame un diálogo gráfico.
+dial_wizard_renoncequest;Reviens me voir si tu veux une quete;Come back to see me if you want a quest.;Vuelve a verme si quieres una misión.
+dial_guard_block;vous ne pouvez pas passer;you cannot pass;No puede pasar
+quest_wizard;Tu veux une quête ?;Do you want a quest?;¿Quieres una misión?
+choice_wizard_yes;oui absolument;yes absolutely;si absolutamente
+choice_wizard_no;non, jamais;no, never;no, nunca
