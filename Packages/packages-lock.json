@@ -18,6 +18,15 @@
       },
       "hash": "9837f4c05998ec3f19a37b040575438686d8dc44"
     },
+    "com.leloader.rewindmeca": {
+      "version": "file:com.leloader.rewindmeca",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.test-framework": "1.6.0",
+        "com.dbrizov.naughtyattributes": "2.1.4"
+      }
+    },
     "com.unity.burst": {
       "version": "1.8.27",
       "depth": 3,

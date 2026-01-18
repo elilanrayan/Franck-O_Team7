@@ -12,9 +12,12 @@ using UnityEngine.SocialPlatforms;
 
 public class RewindManager : MonoBehaviour
 {
-    [field: SerializeField]public List<GameObject> rewindableGameObjects { get; private set; } = new();
+    [HideInInspector]
+    public List<GameObject> rewindableGameObjects { get; private set; } = new();
 
-    public int maxRewindableTime = 700;
+    [HideInInspector]
+    public int maxRewindableTime = 600;
+    [HideInInspector]
     public int currentStoppedFrame;
 
     public event Action<bool> OnToggleRecord;
@@ -82,6 +85,10 @@ public class RewindManager : MonoBehaviour
             SetPause();
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            startRewind();
+        }
     }
 
     void SetPause()
@@ -99,5 +106,12 @@ public class RewindManager : MonoBehaviour
             OnPause?.Invoke(PauseState.Unpaused, currentStoppedFrame);
             currentStoppedFrame = -1;
         }
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.BeginVertical();
+        GUI.Label(new Rect(10, 10, 200, 200), $"Current frame: {Time.frameCount}");
+        GUILayout.EndVertical();
     }
 }

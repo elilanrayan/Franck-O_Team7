@@ -383,7 +383,6 @@ GameObject:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
-  - component: {fileID: 330585547}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -465,18 +464,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &330585547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &403310441
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +614,6 @@ GameObject:
   m_Component:
   - component: {fileID: 410087041}
   - component: {fileID: 410087040}
-  - component: {fileID: 410087042}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -715,18 +701,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &410087042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410087039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &675907520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1043,6 @@ GameObject:
   - component: {fileID: 1029494183}
   - component: {fileID: 1029494182}
   - component: {fileID: 1029494181}
-  - component: {fileID: 1029494185}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -1197,27 +1170,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029494179}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1029494185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1029494179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aa4a658261d1ba4fb9fda6ee2b2e9e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RewindController
-  components:
-  - {fileID: 1029494180}
-  rewindData:
-    _serializedList: []
-  bShouldRecordNewFrames: 1
-  bShouldDeleteOlderFrames: 1
-  limitDataCount: 0
-  currentData: 0
-  test: 
 --- !u!1 &1211088034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1183,7 @@ GameObject:
   - component: {fileID: 1211088038}
   - component: {fileID: 1211088037}
   - component: {fileID: 1211088036}
+  - component: {fileID: 1211088040}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -1358,6 +1311,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211088034}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1211088040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211088034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5443d37a05e188846bda9b05b067184e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NaughtyAttributes.Test::NaughtyAttributes.Test.ReadOnlyTest
+  readOnlyInt: 5
+  nest1:
+    readOnlyFloat: 3.14
+    nest2:
+      readOnlyString: 
 --- !u!1 &1570595192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,8 +1372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8215f7561f2b58d4c92b33ec79141f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Rewind::RewindManager
-  <rewindableGameObjects>k__BackingField: []
-  maxRewindableTime: 700
+  maxRewindableTime: 600
   currentStoppedFrame: 0
   bIsPaused: 0
   frameRemaining: 300
@@ -1742,6 +1711,7 @@ GameObject:
   - component: {fileID: 1997962241}
   - component: {fileID: 1997962240}
   - component: {fileID: 1997962244}
+  - component: {fileID: 1997962245}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1916,6 +1886,22 @@ MonoBehaviour:
     m_keys:
     - 03d55ab32bb0bda488d178b908b12985
     m_values: 00000000
+--- !u!114 &1997962245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997962238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3752443961f7e854d81f9bfecf87b0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Rewind::RewindController
+  components:
+  - {fileID: 1997962239}
+  bShouldRecordNewFrames: 1
+  bShouldDeleteOlderFrames: 1
 --- !u!1 &2070576048
 GameObject:
   m_ObjectHideFlags: 0

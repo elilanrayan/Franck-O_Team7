@@ -1,0 +1,15 @@
+{
+  "name": "com.leloader.rewindmeca",
+  "displayName": "RewindMeca",
+  "version": "1.0.0",
+  "unity": "6000.3",
+  "unityRelease": "3f1",
+  "description": "Rewindddd",
+  "dependencies": {
+    "com.unity.test-framework": "1.6.0",
+    "com.dbrizov.naughtyattributes": "2.1.4"
+  },
+  "author": {
+    "name": "Leandro Lecca"
+  }
+}

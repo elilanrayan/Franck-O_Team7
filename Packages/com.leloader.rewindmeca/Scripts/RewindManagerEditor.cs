@@ -1,17 +1,19 @@
+using NaughtyAttributes.Editor;
 using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 
 [CustomEditor(typeof(RewindManager))]
-public class RewindManagerEditor : Editor
+public class RewindManagerEditor : NaughtyInspector
 {
     float oldValue = 0;
     float currentValue = 0;
     RewindManager manager => (RewindManager)target;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         //EditorApplication.pauseStateChanged += OnPauseStateChanged;
         manager.OnPause += OnPauseStateChanged;
         EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
@@ -20,8 +22,10 @@ public class RewindManagerEditor : Editor
 
     }
 
-    private void OnDisable()
-    {
+    protected override void OnDisable() 
+{
+        base.OnDisable();
+
         //EditorApplication.pauseStateChanged -= OnPauseStateChanged;
         manager.OnPause -= OnPauseStateChanged;
         EditorApplication.hierarchyChanged += OnHiearchyStateChanged;
@@ -31,6 +35,8 @@ public class RewindManagerEditor : Editor
     bool _isOpenned;
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+
         _isOpenned = EditorGUILayout.Foldout(_isOpenned, "Rewindable Object :");
         if (_isOpenned)
         {

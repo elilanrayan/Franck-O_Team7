@@ -1,4 +1,4 @@
-using AYellowpaper.SerializedCollections;
+using NaughtyAttributes.Editor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,18 +7,15 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using NaughtyAttributes;
 
 
 
 [CustomEditor(typeof(RewindController))]
-public class RewindControllerEditor : Editor
+public class RewindControllerEditor : NaughtyInspector
 {
-    
-
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
         GetTest();
 
         RewindController controller = (RewindController)target;
@@ -38,6 +35,8 @@ public class RewindControllerEditor : Editor
 
             menu.ShowAsContext();
         }
+
+        base.OnInspectorGUI();
     }
 
     private void AddOrRemoveComponentToList(Component component, RewindController controller) { 

@@ -1,9 +1,6 @@
-using AYellowpaper.SerializedCollections;
-using NaughtyAttributes;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
+using NaughtyAttributes;
 
 //public interface IRewindableData
 //{
@@ -11,7 +8,7 @@ using UnityEngine.Playables;
 //    public abstract void PlayData();
 //}
 
-[Serializable]
+[System.Serializable]
 public struct FTransformRewindData
 {
     public FTransformRewindData(Vector3 position, Quaternion rotation, Vector3 scale)
@@ -28,32 +25,26 @@ public struct FTransformRewindData
         Scale = transform.localScale;
     }
 
-     public Vector3 Position;
-     public Quaternion Rotation;
-     public Vector3 Scale;
+    public Vector3 Position;
+    public Quaternion Rotation;
+    public Vector3 Scale;
 }
 
-[DisallowMultipleComponent]
+
 public class RewindController : MonoBehaviour
 {
     [SerializeField]
     public List<Component> components = new();
 
-    [SerializedDictionary("Frame", "RewindData")]
-    public SerializedDictionary<int, FTransformRewindData> rewindData;
+    public Dictionary<int, FTransformRewindData> rewindData;
 
     [SerializeField, ReadOnly]
     bool bShouldRecordNewFrames = true;
 
     [SerializeField, ReadOnly]
-    bool bShouldDeleteOlderFrames = true;
+    private bool bShouldDeleteOlderFrames = true;
 
     int limitDataCount;
-
-    int currentData = 0;
-
-    [ContextMenuItem("Load", "Test")]
-    string test;
 
     private void Reset()
     {
@@ -78,11 +69,11 @@ public class RewindController : MonoBehaviour
         {
             case UnityEditor.PauseState.Paused:
                 OnToggleRecord(false);
-                bShouldDeleteOlderFrames = false;
+                // bShouldDeleteOlderFrames = false;
                 break;
             case UnityEditor.PauseState.Unpaused:
                 OnToggleRecord(true);
-                bShouldDeleteOlderFrames = true;
+                // bShouldDeleteOlderFrames = true;
                 SlideAllFrames(currentStoppedFrame);
                 break;
         }
@@ -91,6 +82,7 @@ public class RewindController : MonoBehaviour
     private void OnToggleRecord(bool bShouldRecord)
     {
         this.bShouldRecordNewFrames = bShouldRecord;
+        this.bShouldDeleteOlderFrames = bShouldRecord;
         ToggleGravity(bShouldRecord);
     }
 
@@ -103,7 +95,13 @@ public class RewindController : MonoBehaviour
 
     public void Play(int frame, bool delete)
     {
-        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData)) return;
+        if (!rewindData.TryGetValue(frame, out FTransformRewindData transformData))
+        {
+            Debug.LogWarning($"Didn't find frame: {frame}");
+            return;
+        }
+
+        Debug.Log($"Playing frame: {frame}");
 
         foreach (Component component in components)
         {
@@ -179,8 +177,10 @@ public class RewindController : MonoBehaviour
         }
     }
 
-   public void BeginDestroy()
+    public void BeginDestroy()
     {
         Destroy(this);
     }
+
+
 }
